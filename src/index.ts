@@ -2,15 +2,22 @@ import express, { Application, Request, Response} from 'express';
 import dotenv from 'dotenv'
 import { debug } from 'console';
 
+export interface RootResponse {
+  message: string;
+}
+
 dotenv.config();
 
 const app:Application = express();
 const PORT = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to wayfarer APP API")
+app.get("/", (req: Request, res: Response<RootResponse>) => {
+  res.status(200).json({
+    message : 'Welcome to wayfarer API'
+  })
 })
-const server = app.listen(PORT, () => {
+
+export const server = app.listen(PORT, () => {
  console.log('Server started on port: ', PORT)
 })
 
