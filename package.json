@@ -2,13 +2,13 @@
   "name": "wayfarer-node-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
     "test": "jest",
-    "lint": "eslint src/index.ts",
+    "lint": "eslint src/app.ts",
     "format": "eslint src/**/*.ts --fix",
     "migrate": "node_modules/.bin/node-pg-migrate -j sql --migrations-dir src/migrations -d DB_URL"
   },

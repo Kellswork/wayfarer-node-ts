@@ -1,5 +1,5 @@
 import request from 'supertest';
-import {server, RootResponse} from '../index';
+import {server, RootResponse} from '../app';
 
 
 afterAll( () => {
