@@ -3,7 +3,10 @@
         "node": true,
         "es2021": true
     },
-    "plugins": ["@typescript-eslint", "import"],
+    "plugins": [
+        "@typescript-eslint",
+        "import"
+    ],
     "extends": [
         "airbnb-typescript/base",
         "prettier",
@@ -16,5 +19,15 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
-    "rules": {}
+    "rules": {},
+    "overrides": [
+        {
+            "files": [
+                "tests/**/*"
+            ],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
 }
