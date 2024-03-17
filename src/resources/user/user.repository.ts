@@ -40,3 +40,10 @@ export const emailExists = async (
   if (result.rows[0].exists === true) return true;
   return false;
 };
+
+export const getUserByID = async (db: Pool, ID: string) => {
+  const query = "SELECT * FROM users WHERE id = $1";
+  const result = await db.query(query, [ID]);
+  return result;
+  // what happens if an error occurs?
+};

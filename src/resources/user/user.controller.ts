@@ -66,7 +66,7 @@ export const userSignup = async (req: Request, res: Response) => {
     ${errorDetails.code}-${errorDetails.message}. hint: ${errorDetails.hint}
     ${errorDetails.table} table, constraints: ${errorDetails.constraint}
     `;
-    console.error(error);
+    console.error(errorMessage);
 
     return res.status(500).json({
       status: "error",
