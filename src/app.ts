@@ -1,6 +1,11 @@
 import express, { Application, Request, Response } from "express";
+import bodyParser from "body-parser";
+import compression from "compression";
+import cors from "cors";
+import morgan from 'morgan'
 import config from "./config";
 import { connectDB } from "./config/db";
+import userRoute from "./resources/user/user.routes";
 
 export interface RootResponse {
   message: string;
@@ -9,14 +14,24 @@ export interface RootResponse {
 const app: Application = express();
 const PORT = config.PORT;
 
+app.use(cors());
+app.use(compression());
+// parse json data from client
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(morgan('tiny'))
+
 app.get("/", (req: Request, res: Response<RootResponse>) => {
-  res.status(200).json({
+  return res.status(200).json({
     message: "Welcome to wayfarer API",
   });
 });
+
+app.use("/api/v1", userRoute);
+
+// db connection to close it
 const dbUrl = config.dbUrl ?? "";
-// does this close every pool instance created?
-const { pool } = connectDB( dbUrl);
+const pool = connectDB(dbUrl);
 
 export const server = app.listen(PORT, () => {
   console.log("Server started on port: ", PORT);
