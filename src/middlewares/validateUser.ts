@@ -50,12 +50,11 @@ export const validateUserSignup = [
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-
       return res.status(400).json({
         status: "error",
         Error: errors.array().map((e: ValidationError) => e.msg as string),
       });
     }
-     next();
+    next();
   },
 ];
