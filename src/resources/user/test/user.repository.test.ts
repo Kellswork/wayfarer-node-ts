@@ -40,8 +40,8 @@ describe("createUser", () => {
     createdAt: Date.now(),
   };
 
-  // aseert that it didnt retiurn an error
-  // next asser that thevalues returned form the email or id check, corresponds with the time returned
+
+  // next assert that the values returned form the email or id check, corresponds with the time returned
   it("should add a user to the database", async () => {
     // call createUser and pass in parameters
     await userRepo.createUser(db, sampleUser);
