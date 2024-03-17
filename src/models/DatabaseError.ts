@@ -2,7 +2,7 @@ export interface PgError {
   message: string;
   length: number;
   severity: string;
-  code: string;
+  code: number;
   detail?: string;
   hint?: string;
   position?: string;
