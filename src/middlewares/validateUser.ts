@@ -1,11 +1,10 @@
 // validate user request body input
 import { Request, Response, NextFunction } from "express";
-import { ValidationError, body, validationResult } from "express-validator";
-
-import { UserRequestBody } from "../models/users";
+import {  ValidationError,  body, validationResult } from "express-validator";
+// import { UserRequestBody } from "../models/users";
 
 export const validateUserSignup = [
-  body("firstname")
+  body('firstname')
     .matches(/^[a-zA-Z]+$/i)
     .withMessage("firstname must contain only alphabets")
     .isLength({
@@ -39,23 +38,24 @@ export const validateUserSignup = [
 
   body("password")
     .isLength({
-      min: 5,
+      min: 4,
     })
-    .withMessage("password must have atleast 5 characters")
+    .withMessage("password must have atleast 4 characters")
     .isLength({
       max: 50,
     })
     .withMessage("maximum number of characters reached")
     .trim(),
 
-  (req: Request<UserRequestBody>, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+
       return res.status(400).json({
         status: "error",
         Error: errors.array().map((e: ValidationError) => e.msg as string),
       });
     }
-    next();
+     next();
   },
 ];
