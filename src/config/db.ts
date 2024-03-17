@@ -1,4 +1,4 @@
-import { Pool, QueryConfig } from "pg";
+import { Pool } from "pg";
 
 export const connectDB = (dbUrl: string) => {
 
@@ -9,11 +9,7 @@ export const connectDB = (dbUrl: string) => {
 
   pool.on('error', (err: Error) => {console.log('Unexpected error occured', err)} )
 
-  const db = {
-    query: (text: string, params?: QueryConfig[]) => pool.query(text, params),
-  };
-
-  return {pool, db};
+  return pool;
 };
 
 // Call the function to test the database connection
