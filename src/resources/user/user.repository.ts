@@ -1,6 +1,5 @@
 import { Pool, QueryResult } from "pg";
 import * as models from "../../models/users";
-// import { PgError } from "../../models/DatabaseError";
 
 export interface UserRepository {
   createUser: (db: Pool, email: string) => Promise<QueryResult>;
@@ -29,13 +28,6 @@ export const createUser = async (db: Pool, user: models.User) => {
   console.log("create-user:", result);
   return result;
 };
-// catch (error: unknown) {
-//   // TODO: edit this part later to return the correct error message from the postgres
-//   const errorDetails = error as PgError
-//   const errorMesasge =`create user error:  ${errorDetails.code}-${errorDetails.message}. ${errorDetails.hint}`;
-//   console.error(errorMesasge)
-//   return errorMesasge;
-// }
 
 export const emailExists = async (
   db: Pool,
@@ -48,5 +40,3 @@ export const emailExists = async (
   if (result.rows[0].exists === true) return true;
   return false;
 };
-
-// use a trycatch here to try an return an error here, I want the controller to be neater.
