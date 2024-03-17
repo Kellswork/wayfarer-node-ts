@@ -19,3 +19,8 @@ export interface UserRequestBody {
 }
 
 // user model for created account if neded
+export interface CreatedUser {
+  id: string;
+  isAdmin: boolean;
+  createdAt: number;
+}

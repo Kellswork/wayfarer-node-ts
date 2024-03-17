@@ -19,7 +19,9 @@
         "sourceType": "module",
         "project": "./tsconfig.json"
     },
-    "rules": {},
+    "rules": {
+        "checksVoidReturn": false
+    },
     "overrides": [
         {
             "files": [
