@@ -39,8 +39,7 @@ export const userSignup = async (req: Request, res: Response) => {
     const result = await userRepo.createUser(db, user);
     const createdUser: models.CreatedUser = result.rows[0];
 
-    // add jwt token generate to the helper
-
+    // genertate jwt token
     const token = generateToken({
       id: createdUser.id,
       isAdmin: createdUser.isAdmin,

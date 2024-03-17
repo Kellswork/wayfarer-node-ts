@@ -1,6 +1,5 @@
 import { Pool, QueryResult } from "pg";
 import * as models from "../../models/users";
-// import { PgError } from "../../models/DatabaseError";
 
 export interface UserRepository {
   createUser: (db: Pool, user: models.User) => Promise<QueryResult>;
@@ -29,13 +28,6 @@ export const createUser = async (db: Pool, user: models.User) => {
   ]);
   return result;
 };
-// catch (error: unknown) {
-//   // TODO: edit this part later to return the correct error message from the postgres
-//   const errorDetails = error as PgError
-//   const errorMesasge =`create user error:  ${errorDetails.code}-${errorDetails.message}. ${errorDetails.hint}`;
-//   console.error(errorMesasge)
-//   return errorMesasge;
-// }
 
 export const emailExists = async (
   db: Pool,
@@ -47,11 +39,4 @@ export const emailExists = async (
   // console.log("checking-if-email-exist:", result.rows[0]);
   if (result.rows[0].exists === true) return true;
   return false;
-};
-
-export const getUserByID = async (db: Pool, ID: string) => {
-  const query = "SELECT * FROM users WHERE id = $1";
-  const result = await db.query(query, [ID]);
-  return result;
-  // what happens if an error occurs?
 };
