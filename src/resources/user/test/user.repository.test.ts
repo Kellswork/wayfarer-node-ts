@@ -50,7 +50,6 @@ describe("createUser", () => {
 
     const response = (await userRepo.getUserByID(db, sampleUser.id))
       .rows[0];
-    console.log("hekki", response);
 
     expect(sampleUser.id).toBe(response.id);
     expect(sampleUser.firstname).toBe(response.first_name);
