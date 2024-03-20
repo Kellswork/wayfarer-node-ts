@@ -11,18 +11,15 @@ dotenv.config();
 //unit test for createUser
 describe("createUser", () => {
   beforeAll(async () => {
-    // clear the user table
-    async function clearUserTable() {
-      const query = "DELETE FROM users RETURNING *";
-      const result = await db.query(query);
-    }
-    clearUserTable();
-
-    // close the db connection
+    const query = "DELETE FROM users";
+    await db.query(query);
   });
-  afterAll(async ()=> {
+  afterAll(async () => {
+    const query = "DELETE FROM users";
+    await db.query(query);
+
     await db.end();
-  })
+  });
 
   //get the test database url
   const tesDbUrl = process.env.TEST_DB_URL ?? "";
@@ -35,11 +32,10 @@ describe("createUser", () => {
     firstname: "Kelechi",
     lastname: "Ogbonna",
     password: hashPassword("1234"),
-    email: "ken-test-7@gmail.com",
+    email: "ken-test-1@gmail.com",
     isAdmin: false,
     createdAt: Date.now(),
   };
-
 
   // next assert that the values returned form the email or id check, corresponds with the time returned
   it("should add a user to the database", async () => {
@@ -48,8 +44,7 @@ describe("createUser", () => {
     // check that it didnt retiurn an error in another test
     // write a get by email or id function that returns the user object just created
 
-    const response = (await userRepo.getUserByID(db, sampleUser.id))
-      .rows[0];
+    const response = (await userRepo.getUserByID(db, sampleUser.id)).rows[0];
 
     expect(sampleUser.id).toBe(response.id);
     expect(sampleUser.firstname).toBe(response.first_name);
