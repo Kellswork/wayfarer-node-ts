@@ -24,3 +24,16 @@ export interface CreatedUser {
   isAdmin: boolean;
   createdAt: number;
 }
+
+export interface LoginRequestBody {
+  email: string;
+  password: string;
+}
+
+export interface LoginUser {
+  id: string;
+  password?: string;
+  is_admin: boolean;
+  created_at: string;
+}
+
