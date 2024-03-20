@@ -58,3 +58,29 @@ export const validateUserSignup = [
     next();
   },
 ];
+
+export const validateUserLogin = [
+  body("email").isEmail().withMessage("Please input a valid email address"),
+
+  body("password")
+    .isLength({
+      min: 4,
+    })
+    .withMessage("password must have atleast 4 characters")
+    .isLength({
+      max: 50,
+    })
+    .withMessage("maximum number of characters reached")
+    .trim(),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: "error",
+        Error: errors.array().map((e: ValidationError) => e.msg as string),
+      });
+    }
+    next();
+  },
+];

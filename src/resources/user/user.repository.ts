@@ -5,6 +5,7 @@ export interface UserRepository {
   createUser: (db: Pool, user: models.User) => Promise<QueryResult>;
   emailExist: (db: Pool, email: string) => Promise<boolean>;
   getUserByID: (db: Pool, email: string) => Promise<QueryResult>;
+  getByEmail: (db: Pool, email: string) => Promise<QueryResult>;
 }
 
 interface CreateUser {
@@ -44,6 +45,13 @@ export const emailExists = async (
 export const getUserByID = async (db: Pool, ID: string) => {
   const query = "SELECT * FROM users WHERE id = $1";
   const result = await db.query(query, [ID]);
+  return result;
+  // what happens if an error occurs?
+};
+
+export const getByEmail = async (db: Pool, email: string) => {
+  const query = "SELECT id, password, is_admin, created_at FROM users WHERE email = $1";
+  const result = await db.query(query, [email]);
   return result;
   // what happens if an error occurs?
 };
