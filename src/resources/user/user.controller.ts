@@ -17,11 +17,11 @@ export const userSignup = async (req: Request, res: Response) => {
 
     // validate email submitted by user, check for eamil in datatase
     const doesEmailExist = await userRepo.emailExists(db, email);
-    console.log("email-esist", doesEmailExist);
+    console.log("email-exist", doesEmailExist);
     if (doesEmailExist) {
       return res.status(400).json({
         status: "error",
-        error: "email has already been registered ",
+        error: "email has already been registered",
       });
     }
 
@@ -53,10 +53,10 @@ export const userSignup = async (req: Request, res: Response) => {
     }
 
     // set the header to the generated token
-    res.setHeader("Authorization", "Bearer " + token);
+    res.setHeader("authorization", "Bearer " + token);
 
     // return created user as response
-    return res.status(200).json({
+    return res.status(201).json({
       status: "sucess",
       data: createdUser,
     });
@@ -66,7 +66,7 @@ export const userSignup = async (req: Request, res: Response) => {
     ${errorDetails.code}-${errorDetails.message}. hint: ${errorDetails.hint}
     ${errorDetails.table} table, constraints: ${errorDetails.constraint}
     `;
-    console.error(error);
+    console.error(errorMessage);
 
     return res.status(500).json({
       status: "error",

@@ -2,8 +2,9 @@ import { Pool, QueryResult } from "pg";
 import * as models from "../../models/users";
 
 export interface UserRepository {
-  createUser: (db: Pool, email: string) => Promise<QueryResult>;
+  createUser: (db: Pool, user: models.User) => Promise<QueryResult>;
   emailExist: (db: Pool, email: string) => Promise<boolean>;
+  getUserByID: (db: Pool, email: string) => Promise<QueryResult>;
 }
 
 interface CreateUser {
@@ -25,7 +26,6 @@ export const createUser = async (db: Pool, user: models.User) => {
     user.createdAt,
     user.updatedAt,
   ]);
-  console.log("create-user:", result);
   return result;
 };
 
@@ -36,7 +36,14 @@ export const emailExists = async (
   const query = "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)";
 
   const result = await db.query(query, [email]);
-  console.log("checking-if-email-exist:", result.rows[0]);
+  // console.log("checking-if-email-exist:", result.rows[0]);
   if (result.rows[0].exists === true) return true;
   return false;
+};
+
+export const getUserByID = async (db: Pool, ID: string) => {
+  const query = "SELECT * FROM users WHERE id = $1";
+  const result = await db.query(query, [ID]);
+  return result;
+  // what happens if an error occurs?
 };

@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 
 require('dotenv').config();
 
-
-console.log('jwt', process.env.JWT_SECRET)
 export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
   return jwt.sign(
     {
