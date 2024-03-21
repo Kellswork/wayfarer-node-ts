@@ -19,7 +19,7 @@ app.use(compression());
 // parse json data from client
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('tiny'))
+app.use(morgan('dev'))
 
 app.get("/", (req: Request, res: Response<RootResponse>) => {
   return res.status(200).json({
