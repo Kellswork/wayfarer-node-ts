@@ -2,10 +2,11 @@
   "name": "wayfarer-node-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/src/app.js",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "start": "node dist/src/app.js --watch",
     "dev": "nodemon src/app.ts",
     "test": "jest --detectOpenHandles",
     "lint": "eslint src/app.ts",
@@ -27,6 +28,7 @@
     "morgan": "^1.10.0",
     "node-pg-migrate": "6.2.2",
     "pg": "8.11.3",
+    "rimraf": "5.0.5",
     "supertest": "6.3.4",
     "uuid": "9.0.1"
   },
@@ -63,5 +65,8 @@
     "prettier": "3.2.5",
     "ts-node": "10.9.2",
     "typescript": "5.4.2"
+  },
+  "execMap": {
+    "ts": "node --require ts-node/register"
   }
 }
