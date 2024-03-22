@@ -65,7 +65,7 @@ jobs:
         run: sleep 10s  # Adjust the sleep duration as needed
 
       - name: Connect to PostgreSQL
-        run: npm run migrate:ci:test up
+        run: node client.js
         run: 
         env:
           POSTGRES_HOST: postgres
