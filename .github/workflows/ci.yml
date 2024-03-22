@@ -66,8 +66,10 @@ jobs:
 
       - name: Connect to PostgreSQL
         run: npm run migrate:ci:test up
+        run: 
         env:
           POSTGRES_HOST: postgres
           POSTGRES_PORT: 5432
+          TEST_DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
 
       # Add additional steps to run tests
