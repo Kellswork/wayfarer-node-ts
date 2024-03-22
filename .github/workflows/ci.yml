@@ -2,43 +2,65 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  container-job:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+  test:
     name: Test
-    runs-on: ubuntu-latest
-    
-    container: node:10.18-jessie
+    runs-on: ubuntu-22.04
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
+          POSTGRES_DB: api_test
+          POSTGRES_USER: api
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        ports:
-          - 5432:5432
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
-        run: npm run migrate:ci:test up
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+      - name: Run migrations
+        run: npm run migrate:ci:test
+
+      - name: Run tests
+        run: npm test
         env:
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
-          CITEST_DB_URL: postgresql://kells:1234@postgres:5432/nodewayfarer_test
+          TEST_DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
+          TEST_PORT: '3200'
