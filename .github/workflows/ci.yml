@@ -36,7 +36,9 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: kells
+          POSTGRES_PASSWORD: '1234'
+          POSTGRES_DB: nodewayfarer
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -67,6 +69,8 @@ jobs:
       - name: Connect to PostgreSQL
         run: npm run migrate:ci:test up
         env:
-          TEST_DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
+          POSTGRES_USER: kells
+          POSTGRES_PASSWORD: '1234'
+          POSTGRES_DB: nodewayfarer
 
       # Add additional steps to run tests
