@@ -65,11 +65,8 @@ jobs:
         run: sleep 10s  # Adjust the sleep duration as needed
 
       - name: Connect to PostgreSQL
-        run: node client.js
-        run: 
+        run: npm run migrate:ci:test up
         env:
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
           TEST_DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
 
       # Add additional steps to run tests
