@@ -8,7 +8,7 @@
     "build": "npm run clean && tsc",
     "start": "node dist/src/app.js --watch",
     "dev": "nodemon src/app.ts",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --coverage",
     "lint": "eslint src/app.ts",
     "format": "eslint src/**/*.ts --fix",
     "migrate": "node_modules/.bin/node-pg-migrate -j sql --migrations-dir src/migrations -d DB_URL"

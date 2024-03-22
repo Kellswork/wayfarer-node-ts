@@ -27,6 +27,7 @@ export const createUser = async (db: Pool, user: models.User) => {
     user.createdAt,
     user.updatedAt,
   ]);
+  db.end();
   return result;
 };
 
