@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  # Remove duplicate server definition
+  server:
+    build: .
+    ports:
+      - '3200:3200'
+    volumes:
+      - ./src:/app/src
+      - ./nodemon.json:/app/nodemon.json  # Ensure path is correct
+    command: npm run dev
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: kells
+      POSTGRES_PASSWORD: '1234'
+      POSTGRES_DB: nodewayfarer
+    volumes:
+      - data:/var/lib/potgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  data:
+
+
+
