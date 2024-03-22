@@ -42,7 +42,7 @@ jobs:
         run: npm run migrate up
         env:
           # The hostname used to communicate with the PostgreSQL service container
-          DB_URL: postgres://postgres:@localhost:5432/postgres
+          DB_URL: postgres://postgres:postgres@localhost:5432/postgres
           # The default PostgreSQL port
       - name: Run tests
         run: npm test
