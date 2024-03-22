@@ -1,9 +1,14 @@
 version: "3.9"
 services:
+  # Remove duplicate server definition
   server:
-    build: ./
+    build: .
     ports:
       - '3200:3200'
+    volumes:
+      - ./src:/app/src
+      - ./nodemon.json:/app/nodemon.json  # Ensure path is correct
+    command: npm run dev
   postgres:
     image: postgres
     environment:
@@ -17,5 +22,6 @@ services:
 
 volumes:
   data:
+
 
 

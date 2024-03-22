@@ -37,7 +37,7 @@ export const emailExists = async (
   const query = "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)";
 
   const result = await db.query(query, [email]);
-  console.log("checking-if-em:", result.rows[0]);
+  console.log("checking-if-email ooo:", result.rows[0]);
   if (result.rows[0].exists === true) return true;
   return false;
 };
