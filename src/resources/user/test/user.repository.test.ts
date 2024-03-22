@@ -10,10 +10,6 @@ dotenv.config();
 
 //unit test for createUser
 describe("createUser", () => {
-  beforeAll(async () => {
-    const query = "DELETE FROM users";
-    await db.query(query);
-  });
   afterAll(async () => {
     const query = "DELETE FROM users";
     await db.query(query);
