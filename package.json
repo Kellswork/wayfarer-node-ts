@@ -11,7 +11,8 @@
     "test": "jest --detectOpenHandles --coverage",
     "lint": "eslint src/app.ts",
     "format": "eslint src/**/*.ts --fix",
-    "migrate": "node_modules/.bin/node-pg-migrate -j sql --migrations-dir src/migrations -d DB_URL"
+    "migrate": "node_modules/.bin/node-pg-migrate -j sql --migrations-dir src/migrations -d DB_URL",
+    "migrate:ci:test": "node_modules/.bin/node-pg-migrate -j sql --migrations-dir src/migrations -d CITEST_DB_URL"
   },
   "keywords": [],
   "author": "",
