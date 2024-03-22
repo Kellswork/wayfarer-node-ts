@@ -13,8 +13,6 @@ describe("createUser", () => {
   afterAll(async () => {
     const query = "DELETE FROM users";
     await db.query(query);
-
-    await db.end();
   });
 
   //get the test database url
