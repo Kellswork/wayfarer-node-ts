@@ -26,40 +26,44 @@ jobs:
 
       - name: Build project
         run: npm run build
+      - run: npm start
 
-  test:
-    name: Test
-    runs-on: ubuntu-22.04
-    services:
+  services:
+      # Label used to access the service container
       postgres:
-        image: postgres:14
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
         env:
-          POSTGRES_DB: api_test
-          POSTGRES_USER: api
-          POSTGRES_PASSWORD: password
-        ports:
-          - 5432:5432
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
     steps:
-      - name: Checkout
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
+      # Performs a clean installation of all dependencies in the `package.json` file
+      # For more information, see https://docs.npmjs.com/cli/ci.html
       - name: Install dependencies
         run: npm ci
 
-      - name: Run migrations
+      - name: Connect to PostgreSQL
+        # Runs a script that creates a PostgreSQL table, populates
+        # the table with data, and then retrieves the data
         run: npm run migrate:ci:test up
-      - name: Run tests
-        run: npm test
+        # Environment variables used by the `client.js` script to create
+        # a new PostgreSQL table.
         env:
-          TEST_DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
-          TEST_PORT: '3200'
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: localhost
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
