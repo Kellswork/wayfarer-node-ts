@@ -36,9 +36,14 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run database migrations
-        run: DB_URL=postgres://postgres:1234@postgres:5432/postgres npm run migrate up
+        run: DB_URL=postgres://postgres:postgres@localhost:5432/postgres npm run migrate up
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: localhost
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
       - name: Run tests
         run: npm test
