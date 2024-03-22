@@ -57,8 +57,7 @@ jobs:
         run: npm ci
 
       - name: Run migrations
-        run: npm run migrate:ci:test
-
+        run: npm run migrate:ci:test up
       - name: Run tests
         run: npm test
         env:
