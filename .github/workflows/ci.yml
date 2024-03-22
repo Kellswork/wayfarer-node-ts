@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Run database migrations
-        run: npm run migrate up
+        run: node client.js
         env:
           # The hostname used to communicate with the PostgreSQL service container
           DB_URL: postgres://postgres:postgres@localhost:5432/postgres
