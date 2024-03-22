@@ -33,7 +33,7 @@ const sampleUser: models.UserRequestBody = {
   firstname: "Kelechi",
   lastname: "Ogbonna",
   password: "1234",
-  email: "ken-test-2@gmail.com",
+  email: "ken-test-3@gmail.com",
 };
 
 describe("Signup", () => {
