@@ -1,0 +1,22 @@
+version 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/base:stable
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - node/install-packages:
+        pkg-manager: npm
+      - run:
+        command: npm run test
+        name: Run tests
+      
+      
