@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  container-job:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    container: node:10.18-jessie
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Connect to PostgreSQL
+        # Runs a script that creates a PostgreSQL table, populates
+        # the table with data, and then retrieves the data.
+        run: npm run migrate:ci:test up
+        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+        env:
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+          CITEST_DB_URL: postgresql://kells:1234@postgres:5432/nodewayfarer_test
