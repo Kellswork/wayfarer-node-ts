@@ -15,7 +15,7 @@ interface CreateUser {
 
 export const createUser = async (db: Pool, user: models.User) => {
   const query =
-    "INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, to_timestamp($7), $8) returning id, is_admin, created_at";
+    "INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning id, is_admin, created_at";
 
   const result = await db.query(query, [
     user.id,

@@ -5,27 +5,49 @@ import { connectDB } from "../../../config/db";
 import * as models from "../../../models/users";
 import * as userRepo from "../user.repository";
 import { hashPassword } from "../../../helpers/baseHelpers";
+import { newDb } from "pg-mem";
 
 dotenv.config();
 
 //unit test for createUser
 describe("createUser", () => {
+
+  const { Pool } = newDb().adapters.createPg();
+  let db = new Pool();
+
   beforeAll(async () => {
-    const query = "DELETE FROM users";
-    await db.query(query);
+    // Create a new in-memory database instance
+    const createdAt = new Date(Date.now()).toISOString()
+
+    await db.connect();
+
+    // Use the client object for your database interactions
+    await db.query(
+      "CREATE TABLE users (id UUID PRIMARY KEY NOT NULL,email VARCHAR(255) UNIQUE NOT NULL,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,password VARCHAR(255) NOT NULL,is_admin BOOLEAN NOT NULL,created_at TIMESTAMP,updated_at TIMESTAMP)"
+    );
+
+    await db.query(`INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at) VALUES ('b37a1738-1b49-437b-8bf5-c5dac1775672', 'Kelechi', 'Ogbonna', 'ken-test-4@gmail.com', '$2a$10$6P7gC7f.rfmkAvyP8GZYJ.bFfhfzh5VYyZc/D8BHoKQhiOiam/35a', 'false', '${createdAt}', null)`)
+
+    await db.release();
+
   });
+
+  // beforeAll(async () => {
+  //   const query = "DELETE FROM users";
+  //   await db.query(query);
+  // });
   afterAll(async () => {
-    const query = "DELETE FROM users";
-    await db.query(query);
+    // const query = "DELETE FROM users";
+    // await db.query(query);
 
     await db.end();
   });
 
   //get the test database url
-  const tesDbUrl = process.env.TEST_DB_URL ?? "";
-  // connect to the db store
-  const db = connectDB(tesDbUrl);
-  // create sample user object
+  // const tesDbUrl = process.env.TEST_DB_URL ?? "";
+  // // connect to the db store
+  // const db = connectDB(tesDbUrl);
+  // // create sample user object
 
   const sampleUser: models.User = {
     id: uuidv4(),
@@ -34,7 +56,7 @@ describe("createUser", () => {
     password: hashPassword("1234"),
     email: "ken-test-1@gmail.com",
     isAdmin: false,
-    createdAt: Date.now(),
+    createdAt: new Date(Date.now()).toISOString(),
   };
 
   // next assert that the values returned form the email or id check, corresponds with the time returned

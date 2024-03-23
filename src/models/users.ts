@@ -6,8 +6,8 @@ export interface User {
   email: string;
   password: string;
   isAdmin: boolean;
-  createdAt?: number;
-  updatedAt?: number; 
+  createdAt?: string;
+  updatedAt?: string; 
 }
 
 // user model for creating an account request payload

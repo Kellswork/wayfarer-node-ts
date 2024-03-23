@@ -5,7 +5,7 @@ import { dbMiddleware } from '../../middlewares/dbMiddleWare';
 
 const router = Router();
 
-router.post('/signup', validateUserSignup, dbMiddleware,  userSignup)
-router.post('/login', validateUserLogin, dbMiddleware,  userLogin)
+router.post('/signup', validateUserSignup,  userSignup)
+router.post('/login', validateUserLogin,  userLogin)
 
 export default router;

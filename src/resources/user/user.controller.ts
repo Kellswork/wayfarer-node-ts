@@ -34,7 +34,7 @@ export const userSignup = async (req: Request, res: Response) => {
       password: hashedPassword,
       email,
       isAdmin: false,
-      createdAt: Date.now(),
+      createdAt: new Date(Date.now()).toISOString(),
     };
 
     const result = await userRepo.createUser(db, user);
