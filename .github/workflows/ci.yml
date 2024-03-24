@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    environment: Continous Intergration
     runs-on: ubuntu-latest
     services:
       # Label used to access the service container
