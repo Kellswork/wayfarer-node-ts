@@ -1,14 +1,15 @@
-name: Continuous Integration Tests
+name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
   workflow_call:
   workflow_dispatch:
 
 jobs:
   test:
-    environment: Continous Integration
     runs-on: ubuntu-latest
     services:
       # Label used to access the service container
@@ -58,4 +59,3 @@ jobs:
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
-          
