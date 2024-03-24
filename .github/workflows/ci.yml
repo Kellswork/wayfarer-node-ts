@@ -11,10 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
-
     services:
       # Label used to access the service container
       postgres:
@@ -34,7 +30,7 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-    
+
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
@@ -60,3 +56,10 @@ jobs:
           
       - name: Run tests
         run: npm test
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
+          run: |
+            echo 'secret tokern'
+            echo ${{ secrets.JWT_SECRET }}
+          
