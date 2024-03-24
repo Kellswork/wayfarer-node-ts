@@ -1,0 +1,50 @@
+name: Continuous Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+  workflow_dispatch: # Trigger on pushes to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: node:1.18-jessie
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run database migrations
+        run: npm run migrate up
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          DB_URL: postgres://kells:@localhost:5432/nodewayfarer_test
+          # The default PostgreSQL port
+      - name: Run tests
+        run: npm test
