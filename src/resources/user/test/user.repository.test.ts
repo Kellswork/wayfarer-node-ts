@@ -5,9 +5,11 @@ import { connectDB } from "../../../config/db";
 import * as models from "../../../models/users";
 import UserRepository from "../user.repository";
 import { hashPassword } from "../../../helpers/baseHelpers";
+import config from "../../../config";
 
 
 dotenv.config();
+
 
 const sampleUser: models.User = {
   id: uuidv4(),
@@ -22,8 +24,8 @@ const sampleUser: models.User = {
 describe("createUser", () => {
   const connectionString = process.env.TEST_DB_URL ?? '';
   console.log('cs', connectionString)
-  const db = connectDB(connectionString);
-  console.log('d', db)
+  const db = connectDB(config.dbUrl ?? '');
+  console.log('d', config.dbUrl)
 
   afterAll(async () => {
     await db.end();
