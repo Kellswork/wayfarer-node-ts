@@ -5,8 +5,6 @@ import cors from "cors";
 import morgan from "morgan";
 import config from "./config";
 import { connectDB } from "./config/db";
-import us from "./resources/user/user.routes";
-import { dbMiddleware } from "./middlewares/dbMiddleWare";
 import userRouter from "./resources/user/user.routes";
 import UserRepository from "./resources/user/user.repository";
 
@@ -32,7 +30,7 @@ app.get("/", (req: Request, res: Response<RootResponse>) => {
   });
 });
 
-const db = connectDB(config.dbUrl!)
+const db = connectDB(config.dbUrl ?? '')
 const userRepo = new UserRepository(db)
 app.use("/api/v1", userRouter(userRepo));
 

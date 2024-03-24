@@ -9,56 +9,22 @@ import { newDb, DataType } from "pg-mem";
 
 dotenv.config();
 
+const sampleUser: models.User = {
+  id: uuidv4(),
+  firstname: "Kelechi",
+  lastname: "Ogbonna",
+  password: hashPassword("1234"),
+  email: "ken-test-1@gmail.com",
+  isAdmin: false,
+  createdAt: new Date(Date.now()).toISOString(),
+};
 //unit test for createUser
 describe("createUser", () => {
-  const dbb = newDb();
-
-  dbb.public.registerFunction({
-    name: "exists",
-    args: [DataType.text],
-    returns: DataType.bool,
-    implementation: (email: string) => `(SELECT 1 FROM users WHERE email = ${email})`,
-  });
-
-
-  const { Pool } = newDb().adapters.createPg();
-  let db = new Pool();
-
-  beforeAll(async () => {
-    // Create a new in-memory database instance
-    const createdAt = new Date(Date.now()).toISOString();
-
-    await db.connect();
-
-    // Use the client object for your database interactions
-    await db.query(
-      "CREATE TABLE users (id UUID PRIMARY KEY NOT NULL,email VARCHAR(255) UNIQUE NOT NULL,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,password VARCHAR(255) NOT NULL,is_admin BOOLEAN NOT NULL,created_at TIMESTAMP,updated_at TIMESTAMP)"
-    );
-
-    await db.query(
-      `INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at) VALUES ('b37a1738-1b49-437b-8bf5-c5dac1775672', 'Kelechi', 'Ogbonna', 'ken-test-4@gmail.com', '$2a$10$6P7gC7f.rfmkAvyP8GZYJ.bFfhfzh5VYyZc/D8BHoKQhiOiam/35a', 'false', '${createdAt}', null)`
-    );
-
-
-    await db.release();
-  });
+  const db = connectDB("postgres://kells:@localhost:5432/nodewayfarer_test");
 
   afterAll(async () => {
-    // const query = "DELETE FROM users";
-    // await db.query(query);
-
     await db.end();
   });
-
-  const sampleUser: models.User = {
-    id: uuidv4(),
-    firstname: "Kelechi",
-    lastname: "Ogbonna",
-    password: hashPassword("1234"),
-    email: "ken-test-1@gmail.com",
-    isAdmin: false,
-    createdAt: new Date(Date.now()).toISOString(),
-  };
 
   const userRepo = new UserRepository(db);
 
@@ -79,7 +45,6 @@ describe("createUser", () => {
     expect(sampleUser.isAdmin).toBe(response.is_admin);
     // expect(sampleUser.createdAt).toBe(response.isAdmin);
   });
-
 });
 
 // use this for updating the test db DB_URL=test_db_url npm run migrate up

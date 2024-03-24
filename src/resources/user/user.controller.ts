@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import * as models from "../../models/users";
-import UserRepository  from "./user.repository";
+import UserRepository from "./user.repository";
 import { hashPassword } from "../../helpers/baseHelpers";
 import { PgError } from "../../models/DatabaseError";
 import { generateToken } from "../../helpers/jwtTokenHelper";
@@ -20,7 +20,7 @@ export class UserController {
 
       const doesEmailExist = await this.userRepo.emailExists(email);
       if (doesEmailExist) {
-        console.log('email exist', doesEmailExist)
+        console.log("email exist", doesEmailExist);
         return res.status(400).json({
           status: "error",
           error: "email has already been registered",
@@ -39,11 +39,11 @@ export class UserController {
       };
 
       const result = await this.userRepo.createUser(user);
-      const createdUser: models.CreatedUser = result.rows[0];
+      const createdUser = result.rows[0] as models.CreatedUser;
 
       const token = generateToken({
         id: createdUser.id,
-        isAdmin: createdUser.isAdmin,
+        isAdmin: createdUser.is_admin,
       });
       if (typeof token !== "string") {
         console.error(token);
@@ -81,10 +81,13 @@ export class UserController {
       }
 
       const result = await this.userRepo.getByEmail(email);
-      const loginUser: models.LoginUser = result.rows[0];
+      const loginUser = result.rows[0] as models.LoginUser;
+      const loginUserPassword = loginUser.password ?? "";
 
-      if (!bcrypt.compareSync(password, loginUser.password!)) {
-        return res.status(400).json({ status: "error", error: "Invalid Password" });
+      if (!bcrypt.compareSync(password, loginUserPassword)) {
+        return res
+          .status(400)
+          .json({ status: "error", error: "Invalid Password" });
       }
       delete loginUser.password;
 
