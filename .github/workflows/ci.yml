@@ -11,7 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: node:1.18-jessie
     services:
       # Label used to access the service container
       postgres:
@@ -35,7 +34,13 @@ jobs:
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+            node-veriosn: 18
 
       - name: Install dependencies
         run: npm ci
