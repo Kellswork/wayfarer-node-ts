@@ -1,3 +1,3 @@
 # Wayfarer
 
-![CI Test](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+![CI Test](https://github.com/Kellswork/wayfarer-node-ts/actions/workflows/ci.yml/badge.svg)
