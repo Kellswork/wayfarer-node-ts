@@ -19,10 +19,15 @@ class Configuration {
     this.HOST = process.env.HOST ? process.env.HOST : "localhost";
     this.PORT = process.env.PORT ?? "3200";
     this.NODE_ENV = process.env.NODE_ENV ?? "development";
-    this.dbUrl =
-    this.NODE_ENV == "development"
-      ? process.env.DB_URL
-      : process.env.DATABASE_URL;
+    if(this.NODE_ENV === 'test') {
+      this.dbUrl = process.env.TEST_DB_URL;
+    }else {
+      this.dbUrl =
+      this.NODE_ENV == "development"
+        ? process.env.DB_URL
+        : process.env.DATABASE_URL;
+    }
+
   this.baseUrl = "http://" + this.HOST + this.PORT;
 
   }

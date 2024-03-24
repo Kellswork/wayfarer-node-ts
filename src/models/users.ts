@@ -6,8 +6,8 @@ export interface User {
   email: string;
   password: string;
   isAdmin: boolean;
-  createdAt?: number;
-  updatedAt?: number; 
+  createdAt?: string;
+  updatedAt?: string; 
 }
 
 // user model for creating an account request payload
@@ -21,8 +21,8 @@ export interface UserRequestBody {
 // user model for created account if neded
 export interface CreatedUser {
   id: string;
-  isAdmin: boolean;
-  createdAt: number;
+  is_admin: boolean;
+  created_at: number;
 }
 
 export interface LoginRequestBody {

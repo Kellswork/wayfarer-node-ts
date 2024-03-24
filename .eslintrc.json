@@ -20,7 +20,7 @@
         "project": "./tsconfig.json"
     },
     "rules": {
-        "checksVoidReturn": false
+        "checksVoidReturn": 0
     },
     "overrides": [
         {

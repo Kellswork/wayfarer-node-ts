@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
 
-require('dotenv').config();
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET ?? ''
+console.log('jt', process.env.JWT_SECRET)
 
 export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
   return jwt.sign(
@@ -8,7 +12,7 @@ export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
       id: payload.id,
       isAdmin: payload.isAdmin,
     },
-    process.env.JWT_SECRET as string,
+    JWT_SECRET,
     { expiresIn: '7d' },
   );
 };
@@ -16,7 +20,7 @@ export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
 export const verifyToken = (token: string) => {
   if (!token) return false;
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string);
+    const decodedToken = jwt.verify(token, JWT_SECRET);
     return decodedToken;
   } catch (error) {
     return false;
