@@ -21,10 +21,11 @@ const sampleUser: models.UserRequestBody = {
 };
 
 describe("Signup", () => {
-  const pool = connectDB('postgres://kells:@localhost:5432/nodewayfarer_test');
+  const connectionString = process.env.TEST_DB_URL ?? '';
+  const db = connectDB(connectionString);
   
   const app = express();
-  const userRepo = new UserRepository(pool);
+  const userRepo = new UserRepository(db);
   const userRouteTest = userRouter(userRepo);
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
@@ -34,8 +35,8 @@ describe("Signup", () => {
 
 
   afterAll(async () => {
-    await pool.query('DELETE FROM users')
-    await pool.end()
+    await db.query('DELETE FROM users')
+    await db.end()
     server.close();
   });
 

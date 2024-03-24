@@ -50,7 +50,6 @@ jobs:
           # The hostname used to communicate with the PostgreSQL service container
           DB_URL: postgres://postgres:postgres@localhost:5432/postgres
           # The default PostgreSQL port
-          TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
 
       - name: Run tests
         run: npm test
