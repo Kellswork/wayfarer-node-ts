@@ -36,11 +36,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
       - name: Setup Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-veriosn: '18.x'
+          node-version: '18.x'
 
       - name: Install dependencies
         run: npm ci
@@ -49,7 +48,8 @@ jobs:
         run: npm run migrate up
         env:
           # The hostname used to communicate with the PostgreSQL service container
-          DB_URL: postgres://postgres:@postgres:5432/postgres
+          DB_URL: postgres://postgres:postgres@localhost:5432/postgres
           # The default PostgreSQL port
+
       - name: Run tests
         run: npm test
