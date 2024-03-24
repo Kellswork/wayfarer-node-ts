@@ -56,4 +56,5 @@ jobs:
         run: npm test
         env:
           TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
