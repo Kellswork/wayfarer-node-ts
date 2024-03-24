@@ -1,11 +1,22 @@
 import { Router} from 'express'
 import { validateUserLogin, validateUserSignup } from '../../middlewares/validateUser';
-import { userLogin, userSignup } from './user.controller';
+import { UserController } from './user.controller';
 import { dbMiddleware } from '../../middlewares/dbMiddleWare';
+import UserRepository from './user.repository';
 
-const router = Router();
 
-router.post('/signup', validateUserSignup,  userSignup)
-router.post('/login', validateUserLogin,  userLogin)
 
-export default router;
+const userRouter = (userRepo: UserRepository) => {
+  const router = Router();
+
+  const userController = new UserController(userRepo);
+
+  router.post('/signup', validateUserSignup,  userController.userSignup)
+  router.post('/login', validateUserLogin,  userController.userLogin)
+
+  return router;
+}
+
+
+
+export default userRouter;

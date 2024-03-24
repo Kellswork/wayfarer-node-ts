@@ -5,8 +5,10 @@ import cors from "cors";
 import morgan from "morgan";
 import config from "./config";
 import { connectDB } from "./config/db";
-import userRoute from "./resources/user/user.routes";
+import us from "./resources/user/user.routes";
 import { dbMiddleware } from "./middlewares/dbMiddleWare";
+import userRouter from "./resources/user/user.routes";
+import UserRepository from "./resources/user/user.repository";
 
 export interface RootResponse {
   message: string;
@@ -22,9 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
-// db connection to close it
-const dbUrl = config.dbUrl ?? "";
-const pool = connectDB(dbUrl);
+
 
 app.get("/", (req: Request, res: Response<RootResponse>) => {
   return res.status(200).json({
@@ -32,8 +32,9 @@ app.get("/", (req: Request, res: Response<RootResponse>) => {
   });
 });
 
-app.use(dbMiddleware(pool));
-app.use("/api/v1", userRoute);
+const db = connectDB(config.dbUrl!)
+const userRepo = new UserRepository(db)
+app.use("/api/v1", userRouter(userRepo));
 
 export const server = app.listen(PORT, () => {
   console.log("Server started on port: ", PORT);
@@ -45,10 +46,6 @@ process.on("SIGTERM", () => {
   // perfomr clean up task here
 
   server.close(() => {
-    pool.end(() => {
-      console.info("Database Pool has been closed");
-    });
-
     console.info("server is shutdown");
     process.exit(0);
   });
@@ -61,9 +58,6 @@ process.on("SIGINT", () => {
 
   // perfomr clean up task here
   server.close(() => {
-    pool.end(() => {
-      console.info("Database Pool has been shut down");
-    });
     console.info("server is shutdown");
     process.exit(0);
   });
