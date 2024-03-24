@@ -2,14 +2,13 @@ name: Continuous Integration Tests
 
 on:
   push:
-    branches:
-      - main
   pull_request:
   workflow_call:
-  workflow_dispatch: # Trigger on pushes to the main branch
+  workflow_dispatch:
 
 jobs:
   test:
+    environment: Continous Integration
     runs-on: ubuntu-latest
     services:
       # Label used to access the service container
@@ -57,9 +56,6 @@ jobs:
       - name: Run tests
         run: npm test
         env:
-          JWT_SECRET: ${{ secrets.JWT_SECRET.JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           TEST_DB_URL: postgres://postgres:postgres@localhost:5432/postgres
-          run: |
-            echo 'secret tokern'
-            echo ${{ secrets.JWT_SECRET.JWT_SECRET }}
           
