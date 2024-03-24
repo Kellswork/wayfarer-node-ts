@@ -22,10 +22,8 @@ const sampleUser: models.User = {
 };
 //unit test for createUser
 describe("createUser", () => {
-  const connectionString = process.env.TEST_DB_URL;
-  console.log('cs', connectionString)
+
   const db = connectDB(config.dbUrl ?? '');
-  console.log('d', config.dbUrl)
 
   afterAll(async () => {
     await db.end();

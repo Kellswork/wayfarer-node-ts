@@ -51,7 +51,9 @@ jobs:
           DB_URL: postgres://postgres:postgres@localhost:5432/postgres
           # The default PostgreSQL port
         
-
+      - name: Clear tests cache
+        run: npm run clear:test:cache
+          
       - name: Run tests
         run: npm test
         env:
