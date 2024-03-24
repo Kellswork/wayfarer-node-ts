@@ -31,7 +31,7 @@ describe("Signup", () => {
   app.use(bodyParser.json());
 
   app.use("/api/v1", userRouteTest);
-  const server = app.listen(config.PORT);
+  const server = app.listen(3001);
 
 
   afterAll(async () => {
