@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import { connectDB } from "../../../config/db";
 import * as models from "../../../models/users";
-import UserRepository, * as userRepo from "../user.repository";
+import UserRepository from "../user.repository";
 import { hashPassword } from "../../../helpers/baseHelpers";
-import { newDb, DataType } from "pg-mem";
+
 
 dotenv.config();
 
@@ -20,7 +20,8 @@ const sampleUser: models.User = {
 };
 //unit test for createUser
 describe("createUser", () => {
-  const db = connectDB("postgres://kells:@localhost:5432/nodewayfarer_test");
+  const connectionString = process.env.TEST_DB_URL ?? '';
+  const db = connectDB(connectionString);
 
   afterAll(async () => {
     await db.end();
