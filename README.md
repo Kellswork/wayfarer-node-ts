@@ -82,18 +82,14 @@ WayFarer is a public bus transportation booking API server.
 ### Testing
 
 - Jest with SuperTest
-- Unit testing
-
-### Continuous Integration
-
-- GitHub Actions
+- Unit and integration testing
 
 ### Deployment
 
-- Compiler (Babel)
-- Containerization (Docker)
+- Compiler: **Babel**
+- Containerization: **Docker**
 
-### CI/CD
+### Continuous Integration
 
 - GitHub Actions
 
