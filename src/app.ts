@@ -44,7 +44,7 @@ process.on("SIGTERM", () => {
   // perfomr clean up task here
 
   server.close(() => {
-    db.end()
+    void db.end()
     console.info("server is shutdown");
     process.exit(0);
   });
@@ -55,7 +55,7 @@ process.on("SIGINT", () => {
 
   // perfomr clean up task here
   server.close(() => {
-    db.end()
+    void db.end()
     console.info("server is shutdown");
     process.exit(0);
   });

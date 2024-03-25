@@ -11,7 +11,7 @@ export default class UserRepository {
 
   async createUser(user: models.User): Promise<QueryResult> {
     const query =
-      "INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning id, is_admin, created_at";
+      "INSERT INTO users (id, firstname, lastname, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning id, is_admin, created_at";
 
     const result = await this.db.query(query, [
       user.id,
@@ -19,9 +19,9 @@ export default class UserRepository {
       user.lastname,
       user.email,
       user.password,
-      user.isAdmin,
-      user.createdAt,
-      user.updatedAt,
+      user.is_admin,
+      user.created_at,
+      user.updated_at,
     ]);
     return result;
   }
@@ -29,7 +29,7 @@ export default class UserRepository {
   async emailExists(email: string): Promise<boolean> {
     const query = "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)";
     const result = await this.db.query(query, [email]);
-    return result.rows[0].exists === true;
+    return result.rows[0].exists as boolean;
   }
 
   async getUserByID(ID: string): Promise<QueryResult> {
