@@ -1,7 +1,5 @@
-// validate user request body input
 import { Request, Response, NextFunction } from "express";
 import {  ValidationError,  body, validationResult } from "express-validator";
-// import { UserRequestBody } from "../models/users";
 
 export const validateUserSignup = [
   body('firstname')

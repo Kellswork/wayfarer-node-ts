@@ -17,8 +17,8 @@ const sampleUser: models.User = {
   lastname: "Ogbonna",
   password: hashPassword("1234"),
   email: "ken-test-1@gmail.com",
-  isAdmin: false,
-  createdAt: new Date(Date.now()).toISOString(),
+  is_admin: false,
+  created_at: new Date(Date.now()).toISOString(),
 };
 //unit test for createUser
 describe("createUser", () => {
@@ -38,14 +38,14 @@ describe("createUser", () => {
     // check that it didnt retiurn an error in another test
     // write a get by email or id function that returns the user object just created
 
-    const response = (await userRepo.getUserByID(sampleUser.id)).rows[0];
+    const response = (await userRepo.getUserByID(sampleUser.id)).rows[0] as models.User;
 
     expect(sampleUser.id).toBe(response.id);
-    expect(sampleUser.firstname).toBe(response.first_name);
-    expect(sampleUser.lastname).toBe(response.last_name);
+    expect(sampleUser.firstname).toBe(response.firstname);
+    expect(sampleUser.lastname).toBe(response.lastname);
     expect(sampleUser.password).toBe(response.password);
     expect(sampleUser.email).toBe(response.email);
-    expect(sampleUser.isAdmin).toBe(response.is_admin);
+    expect(sampleUser.is_admin).toBe(response.is_admin);
     // expect(sampleUser.createdAt).toBe(response.isAdmin);
   });
 });

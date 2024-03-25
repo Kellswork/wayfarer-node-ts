@@ -1,7 +1,6 @@
 import { Router} from 'express'
 import { validateUserLogin, validateUserSignup } from '../../middlewares/validateUser';
 import { UserController } from './user.controller';
-import { dbMiddleware } from '../../middlewares/dbMiddleWare';
 import UserRepository from './user.repository';
 
 

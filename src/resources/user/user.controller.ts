@@ -34,8 +34,8 @@ export class UserController {
         lastname,
         password: hashedPassword,
         email,
-        isAdmin: false,
-        createdAt: new Date(Date.now()).toISOString(),
+        is_admin: false,
+        created_at: new Date(Date.now()).toISOString(),
       };
 
       const result = await this.userRepo.createUser(user);

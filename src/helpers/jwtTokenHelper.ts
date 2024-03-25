@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET ?? ''
-console.log('jt', process.env.JWT_SECRET)
 
 export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
   return jwt.sign(
