@@ -3,7 +3,6 @@ import * as models from "../../../models/users";
 import express from "express";
 import UserRepository from "../user.repository";
 import userRouter from "../user.routes";
-import config from "../../../config";
 import bodyParser from "body-parser";
 import { connectDB } from "../../../config/db";
 
