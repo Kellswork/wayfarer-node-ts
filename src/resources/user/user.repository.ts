@@ -2,7 +2,14 @@
 import { Pool, QueryResult } from "pg";
 import * as models from "../../models/users";
 
-export default class UserRepository {
+
+interface UserRepositoryInterface {
+  createUser(user: models.User): Promise<QueryResult>;
+  emailExists(email: string): Promise<boolean>;
+  getUserByID(ID: string): Promise<QueryResult>;
+  getByEmail(email: string): Promise<QueryResult>;
+}
+export default class UserRepository implements UserRepositoryInterface {
   private db: Pool;
 
   constructor(db: Pool) {

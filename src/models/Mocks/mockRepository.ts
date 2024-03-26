@@ -1,0 +1,55 @@
+export const mockCreateUserDbResult = {
+  command: "INSERT",
+  rowCount: 1,
+  oid: 0,
+  rows: [
+    {
+      id: "d1b81d47-a409-4d4a-85f5-2b7a856221af",
+      is_admin: false,
+      created_at: "2024-03-26T00:00:04.039Z",
+    },
+  ],
+  fields: [
+    {
+      name: "id",
+      tableID: 16405,
+      columnID: 1,
+      dataTypeID: 2950,
+      dataTypeSize: 16,
+      dataTypeModifier: -1,
+      format: "text",
+    },
+    {
+      name: "is_admin",
+      tableID: 16405,
+      columnID: 6,
+      dataTypeID: 16,
+      dataTypeSize: 1,
+      dataTypeModifier: -1,
+      format: "text",
+    },
+    {
+      name: "created_at",
+      tableID: 16405,
+      columnID: 7,
+      dataTypeID: 1114,
+      dataTypeSize: 8,
+      dataTypeModifier: -1,
+      format: "text",
+    },
+  ],
+  _parsers: [],
+  _types: {
+    _types: {
+      getTypeParser: [],
+      setTypeParser: [],
+      arrayParser: [Object],
+      builtins: [Object],
+    },
+    text: {},
+    binary: {},
+  },
+  RowCtor: null,
+  rowAsArray: false,
+  _prebuiltEmptyResultObject: { id: null, is_admin: null, created_at: null },
+};

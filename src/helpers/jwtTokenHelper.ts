@@ -1,18 +1,21 @@
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET ?? ''
+const JWT_SECRET = process.env.JWT_SECRET ?? "";
 
-export const generateToken = (payload: {id: string, isAdmin: boolean}) => {
+export const generateToken = (payload: {
+  id: string;
+  isAdmin: boolean;
+}): string => {
   return jwt.sign(
     {
       id: payload.id,
       isAdmin: payload.isAdmin,
     },
     JWT_SECRET,
-    { expiresIn: '7d' },
+    { expiresIn: "7d" }
   );
 };
 
