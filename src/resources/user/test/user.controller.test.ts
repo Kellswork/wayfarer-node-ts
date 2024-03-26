@@ -1,12 +1,12 @@
 import UserRepository from "../user.repository";
 import { UserController } from "../user.controller";
 import { v4 as uuidv4 } from "uuid";
-const httpMocks = require("node-mocks-http");
 import { Pool } from "pg";
 import { mockCreateUserDbResult } from "../../../models/Mocks/mockRepository";
-import dotenv from 'dotenv';
-dotenv.config();
-// Mock the Pool class
+const httpMocks = require("node-mocks-http");
+
+
+
 jest.mock("pg");
 jest.mock("uuid");
 
