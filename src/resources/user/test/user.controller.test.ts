@@ -10,7 +10,6 @@ dotenv.config();
 jest.mock("pg");
 jest.mock("uuid");
 
-process.env.JWT_SECRET = '';
 const mockRequestBody = {
   firstname: "kells",
   lastname: "ogbonna",
