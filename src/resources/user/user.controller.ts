@@ -45,13 +45,6 @@ export class UserController {
         id: createdUser.id,
         isAdmin: createdUser.is_admin,
       });
-      if (typeof token !== "string") {
-        console.error(token);
-        return res.status(500).json({
-          status: "error",
-          error: "failed to generate token",
-        });
-      }
 
       res.setHeader("authorization", "Bearer " + token);
 
